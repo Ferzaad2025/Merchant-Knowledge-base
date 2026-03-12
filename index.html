@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Knowledge Base</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .header { background: #007bff; color: white; padding: 10px; text-align: center; }
+        .tab { display: inline-block; margin: 10px; padding: 10px; cursor: pointer; background: #f1f1f1; }
+        .active { background: #007bff; color: white; }
+        .content { padding: 20px; }
+        .search { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Merchant Knowledge Base</h1>
+    </div>
+    <div>
+        <div class="tab active" onclick="openTab('data')">Merchant Data</div>
+        <div class="tab" onclick="openTab('search')">Search</div>
+        <div class="tab" onclick="openTab('explorer')">Explorer</div>
+        <div class="tab" onclick="openTab('analytics')">Analytics</div>
+    </div>
+    <div class="content">
+        <div id="data" class="tab-content active">
+            <h2>Merchant Data</h2>
+            <p>All merchant data displayed here.</p>
+            <div id="merchant-data"></div>
+        </div>
+        <div id="search" class="tab-content">
+            <h2>Search</h2>
+            <div class="search">
+                <input type="text" id="search-input" placeholder="Search merchants...">
+                <button onclick="searchMerchants()">Search</button>
+            </div>
+            <div id="search-results"></div>
+        </div>
+        <div id="explorer" class="tab-content">
+            <h2>Explorer</h2>
+            <p>Explore merchant insights and details.</p>
+        </div>
+        <div id="analytics" class="tab-content">
+            <h2>Analytics</h2>
+            <p>Display merchant analytics here.</p>
+        </div>
+    </div>
+    <script>
+        let merchants = [
+            { name: 'Merchant 1', info: 'Info about Merchant 1' },
+            { name: 'Merchant 2', info: 'Info about Merchant 2' },
+            { name: 'Merchant 3', info: 'Info about Merchant 3' }
+        ];
+
+        function openTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            const activeTab = document.getElementById(tabName);
+            activeTab.classList.add('active');
+            const tabButtons = document.querySelectorAll('.tab');
+            tabButtons.forEach(button => button.classList.remove('active'));
+            document.querySelector(`.tab[onclick*='${tabName}']`).classList.add('active');
+        }
+
+        function displayMerchants() {
+            const dataDiv = document.getElementById('merchant-data');
+            dataDiv.innerHTML = '';
+            merchants.forEach(merchant => {
+                dataDiv.innerHTML += `<div><strong>${merchant.name}</strong>: ${merchant.info}</div>`;
+            });
+        }
+
+        function searchMerchants() {
+            const input = document.getElementById('search-input').value.toLowerCase();
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = '';
+            const results = merchants.filter(merchant => merchant.name.toLowerCase().includes(input));
+            results.forEach(result => {
+                resultsDiv.innerHTML += `<div><strong>${result.name}</strong>: ${result.info}</div>`;
+            });
+        }
+
+        // Initialize merchant data
+        displayMerchants();
+    </script>
+</body>
+</html>
